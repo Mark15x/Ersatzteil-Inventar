@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template_string, request, redirect, url_for
 import sqlite3
+import os
 
 app = Flask(__name__)
 
@@ -24,7 +25,15 @@ def index():
     cursor.execute('SELECT * FROM parts')
     parts = cursor.fetchall()
     conn.close()
-    return render_template('index.html', parts=parts)
+    
+    # Liest die index.html direkt aus dem Hauptverzeichnis
+    if os.path.exists('index.html'):
+        with open('index.html', 'r', encoding='utf-8') as f:
+            html_content = f.read()
+    else:
+        html_content = "<h1>index.html nicht gefunden!</h1>"
+        
+    return render_template_string(html_content, parts=parts)
 
 @app.route('/add', methods=['POST'])
 def add_part():
