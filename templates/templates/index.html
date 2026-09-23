@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Ersatzteil-Inventar</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f9; color: #333; }
+        h1, h2 { color: #2c3e50; }
+        form { background: #fff; padding: 20px; border-radius: 5px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        input { padding: 8px; margin: 5px 10px 5px 0; width: 200px; }
+        button { padding: 8px 15px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #219653; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #2c3e50; color: white; }
+    </style>
+</head>
+<body>
+
+    <h1>Ersatzteil-Inventar (Web-Version)</h1>
+    
+    <form action="/add" method="POST">
+        <h2>Neues Teil hinzufügen</h2>
+        <input type="text" name="name" placeholder="Teilename" required>
+        <input type="number" name="quantity" placeholder="Anzahl" required>
+        <input type="text" name="location" placeholder="Lagerort" required>
+        <button type="submit">Hinzufügen</button>
+    </form>
+
+    <h2>Lagerbestand</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Anzahl</th>
+            <th>Lagerort</th>
+        </tr>
+        {% for part in parts %}
+        <tr>
+            <td>{{ part[0] }}</td>
+            <td>{{ part[1] }}</td>
+            <td>{{ part[2] }}</td>
+            <td>{{ part[3] }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4">Noch keine Teile im Inventar.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
